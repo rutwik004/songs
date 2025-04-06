@@ -1,91 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song Collection</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-        header {
-            background-color: #5528a8;
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-            width: 100%;
-        }
-        .button-container {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1rem;
-        }
-        button {
-            padding: 0.75rem 1.5rem;
-            background-color: #5528a8;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 1rem;
-        }
-        button:hover {
-            background-color: #0c0122;
-        }
-        .song-list {
-            margin-top: 2rem;
-            padding: 1rem;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 80%;
-            max-width: 600px;
-        }
-        ol {
-            padding-left: 20px;
-        }
-    </style>
-    <script>
-        function showSongs(category) {
-            const englishSongs = ["Heat Waves - Glass Animals", "Yung Kai", "Die With a Smile", "Snowman", "Justin Bieber - Baby", "One Direction", "Perfect", "Dandelions", "Coldplay - Hymn for the Weekend", "Shape of You", "Believer", "Attention - Charlie Puth", "Unstoppable", "Story of My Life", "Sway", "Until I Found You", "Excuses", "Paradise", "Igloo", "Dreamers", "That That", "Demons"];
-            const hindiSongs = ["Tum Tak - Raanjhanaa", "Teri Ore", "Saathiya", "Saibo", "Jash-e-Bahaaraa", "Manwa Laage", "Tere Bina", "Falak Tak", "Piya O Re Piya", "Locha-e-Ulfat", "Likhe Jo Khat Tujhe", "Tose Naina", "Tu Jaane Na", "Tujhe Kitna Chahne Lage", "Zaroor", "Tere Hawale", "Dil Se Dil - Sita Ram", "Tu Hain Toh", "O Rangrez", "Jugraafiya", "Jo Tum Mere Ho", "O Meri Laila", "Sapna Jahan", "Suniyan Suniyan", "Main Agar Kahoon", "Kaise Hua", "Aankhein Khuli", "Cheques", "Mantra", "Uff Teri Ada", "Yeh Raaten Yeh Mausam", "Ik Lamha", "Dil Toh Baccha Hai", "Sooraj Duba Hai", "Safar", "Makhna", "Khuda Jaane", "Chand Sifarish", "Tauba Tauba - Karan Aujla", "Maharani", "One Love", "Tere Bina Na Guzara", "Ve Haaniyaan", "Ik Junoon", "Khairiyat", "Ek Ladki Bheegi Bhagi Si", "Manjha", "Love You Zindagi", "Rang Jo Lagyo", "Illegal Weapon 2.0", "Channa Ve", "Meri Sapno Ki Rani", "Hai Apna Dil Toh Awara", "Ek Ladki Ko Dekha", "Bulleya - Sultan"];
-            const mixedSongs = [...englishSongs, ...hindiSongs];
-            const songs = category === 'english' ? englishSongs : category === 'hindi' ? hindiSongs : mixedSongs;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Song Collection</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #5528a8;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+      width: 100%;
+    }
+    .button-container {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      background-color: #5528a8;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #0c0122;
+    }
+    .song-list {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 80%;
+      max-width: 700px;
+    }
+    ol {
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .copy-btn {
+      margin-left: 1rem;
+      background-color: #28a745;
+      color: white;
+      padding: 4px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .copy-btn:hover {
+      background-color: #1c7c31;
+    }
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      z-index: 999;
+    }
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+  <script>
+    function showSongs(category) {
+      const englishSongs = ["Heat Waves - Glass Animals", "Yung Kai", "Die With a Smile", "Snowman", "Justin Bieber - Baby", "One Direction", "Perfect", "Dandelions", "Coldplay - Hymn for the Weekend", "Shape of You", "Believer", "Attention - Charlie Puth", "Unstoppable", "Story of My Life", "Sway", "Until I Found You", "Excuses", "Paradise", "Igloo", "Dreamers", "That That", "Demons"];
+      const hindiSongs = ["Tum Tak - Raanjhanaa", "Teri Ore", "Saathiya", "Saibo", "Jash-e-Bahaaraa", "Manwa Laage", "Tere Bina", "Falak Tak", "Piya O Re Piya", "Locha-e-Ulfat", "Likhe Jo Khat Tujhe", "Tose Naina", "Tu Jaane Na", "Tujhe Kitna Chahne Lage", "Zaroor", "Tere Hawale", "Dil Se Dil - Sita Ram", "Tu Hain Toh", "O Rangrez", "Jugraafiya", "Jo Tum Mere Ho", "O Meri Laila", "Sapna Jahan", "Suniyan Suniyan", "Main Agar Kahoon", "Kaise Hua", "Aankhein Khuli", "Cheques", "Mantra", "Uff Teri Ada", "Yeh Raaten Yeh Mausam", "Ik Lamha", "Dil Toh Baccha Hai", "Sooraj Duba Hai", "Safar", "Makhna", "Khuda Jaane", "Chand Sifarish", "Tauba Tauba - Karan Aujla", "Maharani", "One Love", "Tere Bina Na Guzara", "Ve Haaniyaan", "Ik Junoon", "Khairiyat", "Ek Ladki Bheegi Bhagi Si", "Manjha", "Love You Zindagi", "Rang Jo Lagyo", "Illegal Weapon 2.0", "Channa Ve", "Meri Sapno Ki Rani", "Hai Apna Dil Toh Awara", "Ek Ladki Ko Dekha", "Bulleya - Sultan"];
+      const mixedSongs = [...englishSongs, ...hindiSongs];
+      const songs = category === 'english' ? englishSongs : category === 'hindi' ? hindiSongs : mixedSongs;
 
-            const songList = document.getElementById('song-list');
-            songList.innerHTML = '';
+      const songList = document.getElementById('song-list');
+      songList.innerHTML = '';
 
-            const ol = document.createElement('ol');
-            songs.forEach(song => {
-                const li = document.createElement('li');
-                li.textContent = song;
-                ol.appendChild(li);
-            });
-            songList.appendChild(ol);
-        }
-    </script>
+      const ol = document.createElement('ol');
+      songs.forEach(song => {
+        const li = document.createElement('li');
+
+        const span = document.createElement('span');
+        span.textContent = song;
+
+        const copyBtn = document.createElement('button');
+        copyBtn.textContent = 'Copy';
+        copyBtn.className = 'copy-btn';
+        copyBtn.onclick = () => copyToClipboard(song);
+
+        li.appendChild(span);
+        li.appendChild(copyBtn);
+        ol.appendChild(li);
+      });
+      songList.appendChild(ol);
+    }
+
+    function copyToClipboard(songName) {
+      const textToCopy = `/play ${songName}`;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showToast(`Copied: ${textToCopy} — now go vibe like a legend 😎`);
+      }, (err) => {
+        showToast("Oops! Couldn't copy that. Try again.");
+        console.error('Copy failed:', err);
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+  </script>
 </head>
 <body>
-    <header>
-        <h1>Song Collection</h1>
-    </header>
-    <div class="button-container">
-        <button onclick="showSongs('english')">English Songs</button>
-        <button onclick="showSongs('hindi')">Hindi Songs</button>
-        <button onclick="showSongs('mixed')">Mixed Songs</button>
-    </div>
-    <div id="song-list" class="song-list">
-        <ol></ol>
-    </div>
+  <header>
+    <h1>Song Collection</h1>
+  </header>
+  <div class="button-container">
+    <button onclick="showSongs('english')">English Songs</button>
+    <button onclick="showSongs('hindi')">Hindi Songs</button>
+    <button onclick="showSongs('mixed')">Mixed Songs</button>
+  </div>
+  <div id="song-list" class="song-list">
+    <ol></ol>
+  </div>
+  <div id="toast"></div>
 </body>
 </html>
